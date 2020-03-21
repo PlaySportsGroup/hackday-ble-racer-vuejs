@@ -4,6 +4,7 @@
         <button @click="addCyclist" class="button add-cyclist">Add Cyclist</button>
         <button @click="start" class="button start-race">Start Race</button>
       </div>
+      <div class="finished" v-if="winner">🏁 {{winner}} Won! 🏁</div>
       <div class="track">
         <Cyclist v-for="bike in cyclist"
           :key="bike.id"
@@ -32,10 +33,21 @@ export default {
       startTime: null,
     };
   },
+  updated() {
+    if (this.winner && this.record) {
+      const now = moment();
+      const seconds = now.diff(this.startTime) / 1000;
+      this.record = false;
+      window.alert(`${this.winner} has finished in ${seconds} seconds`);
+    }
+  },
   computed: {
     cyclist() {
       return this.$store.getters.cyclist;
-    }
+    },
+    winner() {
+      return this.$store.getters.winner;
+    },
   },
   methods: {
     addCyclist() {

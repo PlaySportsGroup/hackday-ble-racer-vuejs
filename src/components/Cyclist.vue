@@ -5,6 +5,7 @@
       <h1 class="player-name white">Player {{id}}: {{name}} <button @click="start" class="connect">
         <img src="../assets/bluetooth.svg" alt="bluetooth"/>
       </button></h1>
+      <button @click="test">TEST</button>
       <div class="power-wrapper">
         <h2>Power:</h2>
         <div class="total-power white">
@@ -24,14 +25,12 @@
   </div>
 
     <div>
-    <div class="road">
-      <div class="finished" v-if="finished">🏁 {{name}} Won! 🏁</div>
-      <div class="cyclist" :style="{'margin-left': position+ '%'}">
-        <div class="tag">{{name}}</div>
-        <div id="bm"></div>
+      <div class="road">
+        <div class="cyclist" :style="{'margin-left': position+ '%'}">
+          <div class="tag">{{name}}</div>
+          <div id="bm"></div>
+        </div>
       </div>
-    </div>
-
     </div>
   </div>
 </template>
@@ -39,7 +38,6 @@
 <script>
 import { Cartesian, Line } from 'laue';
 import bodymovin from 'bodymovin';
-import moment from 'moment';
 
 export default {
   components: {
@@ -52,13 +50,6 @@ export default {
     record: Boolean,
     name: String,
     startTime: Object,
-  },
-  updated() {
-    if (this.finished) {
-      const now = moment();
-      const seconds = now.diff(this.startTime) / 1000;
-      window.alert(`${this.name} has finished in ${seconds} seconds`);
-    }
   },
   mounted() {
     this.$nextTick(() => {
@@ -109,6 +100,15 @@ export default {
         this.powerData.push({ value: power });
       }
     },
+    test() {
+      const power = 1000;
+      this.current_power = power;
+      if (this.record && !this.finished) {
+        this.animation.setSpeed(power / 100);
+        this.total_power += power;
+        this.powerData.push({ value: power });
+      }
+    },
   },
   watch: {
     total_power(totalPower) {
@@ -119,7 +119,7 @@ export default {
 
       if (totalPower >= this.target_power) {
         this.animation.setSpeed(0);
-        this.finished = true;
+        this.$store.dispatch('finished', this.name);
       }
     },
   },
