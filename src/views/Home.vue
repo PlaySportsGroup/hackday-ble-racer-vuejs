@@ -4,8 +4,7 @@
       <span class="white">GC<i>N</i></span>
       <span class="red">Bro<i>w</i>ser Cr<i>i</i>t</span>
     </div>
-    <button @click="start" >startRace</button>
-    <Course :record="record"/>
+    <Course/>
   </div>
 </template>
 
@@ -20,16 +19,6 @@ export default {
   name: 'Home',
   components: {
     Course,
-  },
-  data() {
-    return {
-      record: false,
-    };
-  },
-  methods: {
-    start() {
-      this.record = true;
-    },
   },
 };
 </script>

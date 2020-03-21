@@ -9,12 +9,20 @@
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-common-types": "^0.2.27",
+    "@fortawesome/fontawesome-svg-core": "^1.2.27",
+    "@fortawesome/free-solid-svg-icons": "^5.12.1",
+    "@fortawesome/vue-fontawesome": "^0.1.9",
+    "bodymovin": "^4.13.0",
     "core-js": "^3.6.4",
     "laue": "^0.2.1",
+    "moment": "^2.24.0",
     "node-sass": "^4.13.1",
     "sass-loader": "^8.0.2",
     "vue": "^2.6.11",
     "vue-router": "^3.1.5",
+    "vue-svg-inline-loader": "^1.4.6",
+    "vue-svg-loader": "^0.16.0",
     "vuex": "^3.1.2"
   },
   "devDependencies": {
