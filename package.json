@@ -10,9 +10,9 @@
   },
   "dependencies": {
     "core-js": "^3.6.4",
+    "laue": "^0.2.1",
     "node-sass": "^4.13.1",
     "sass-loader": "^8.0.2",
-    "laue": "^0.2.1",
     "vue": "^2.6.11",
     "vue-router": "^3.1.5",
     "vuex": "^3.1.2"

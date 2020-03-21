@@ -28,8 +28,9 @@ export default {
   },
   methods: {
     addCyclist() {
-      this.count += 1;
-      this.cyclist.push({ id: this.count });
+      this.$store.dispatch('addCyclist');
+      // this.count += 1;
+      // this.cyclist.push({ id: this.count });
     },
   },
 };
