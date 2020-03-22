@@ -31,6 +31,9 @@ export default new Vuex.Store({
     addCyclist(context, name) {
       context.commit('addCyclist', name);
     },
+    SOCKET_ADD_CYCLIST(context, name) {
+      context.commit('addCyclist', name);
+    },
     finished(context, name) {
       if (!this.state.winner) {
         context.commit('winner', name);

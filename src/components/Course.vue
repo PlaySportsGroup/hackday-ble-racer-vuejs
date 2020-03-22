@@ -52,7 +52,8 @@ export default {
   methods: {
     addCyclist() {
       const name = window.prompt('Please enter your name', '');
-      this.$store.dispatch('addCyclist', name);
+      this.$socket.emit('add_cyclist', name);
+      // this.$store.dispatch('addCyclist', name);
       // this.count += 1;
       // this.cyclist.push({ id: this.count });
     },

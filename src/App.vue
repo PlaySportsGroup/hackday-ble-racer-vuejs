@@ -10,6 +10,11 @@ export default {
   data() {
     return {};
   },
+  sockets: {
+    connect() {
+      console.log('socket connected');
+    },
+  },
 };
 </script>
 <style>

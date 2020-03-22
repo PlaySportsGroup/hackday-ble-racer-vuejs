@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "serve": "vue-cli-service serve --host 0.0.0.0",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "test:unit": "vue-cli-service test:unit"
@@ -21,6 +21,7 @@
     "sass-loader": "^8.0.2",
     "vue": "^2.6.11",
     "vue-router": "^3.1.5",
+    "vue-socket.io": "^3.0.7",
     "vue-svg-inline-loader": "^1.4.6",
     "vue-svg-loader": "^0.16.0",
     "vuex": "^3.1.2"
