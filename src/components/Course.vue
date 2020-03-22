@@ -28,7 +28,6 @@ export default {
   },
   data() {
     return {
-      count: 0,
       record: false,
       startTime: null,
     };
@@ -38,6 +37,11 @@ export default {
       const now = moment();
       const seconds = now.diff(this.startTime) / 1000;
       this.record = false;
+      const data = {
+        name: this.winner,
+        time: seconds,
+      };
+      this.$store.dispatch('addWinnerToDb', data);
       window.alert(`${this.winner} has finished in ${seconds} seconds`);
     }
   },
@@ -53,8 +57,6 @@ export default {
     addCyclist() {
       const name = window.prompt('Please enter your name', '');
       this.$store.dispatch('addCyclist', name);
-      // this.count += 1;
-      // this.cyclist.push({ id: this.count });
     },
     start() {
       this.record = true;
