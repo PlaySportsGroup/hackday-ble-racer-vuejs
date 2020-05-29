@@ -6,14 +6,31 @@
 
 <script>
 
+import ws from './utils/ws';
+
 export default {
   data() {
-    return {};
+    return {
+    };
   },
-  sockets: {
-    connect() {
-      console.log('socket connected');
-    },
+  created() {
+    if ('WebSocket' in window) {
+      console.log('can use websocket');
+      ws.onopen = () => {
+        console.log('Successfully connected to the echo websocket server...');
+      };
+
+      ws.addEventListener('message', (messageEvent) => {
+        console.log(messageEvent.data);
+        const paramaters = JSON.parse(messageEvent.data);
+        console.log(paramaters);
+        this.$store.dispatch(paramaters.method, paramaters.data);
+      });
+
+      ws.addEventListener('error', (error) => {
+        console.log(error.data);
+      });
+    }
   },
 };
 </script>

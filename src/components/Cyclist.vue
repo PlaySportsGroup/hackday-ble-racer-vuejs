@@ -10,16 +10,16 @@
         <h2>Power:</h2>
         <div class="total-power white">
 
-          Total: {{ total_power }}
+          Total: {{ power.total_power }}
           <font-awesome-icon icon="bolt" />
         </div>
         <div class="current-power white" :class="resistance">
-          Current: {{ current_power }}
+          Current: {{ power.current_power }}
           <font-awesome-icon icon="bolt" />
         </div>
       </div>
     </div>
-    <la-cartesian :data="powerData" class="power-graph" :width="1680">
+    <la-cartesian :data="power.powerData" class="power-graph" :width="1680">
       <la-line curve animated prop="value"></la-line>
     </la-cartesian>
   </div>
@@ -38,6 +38,7 @@
 <script>
 import { Cartesian, Line } from 'laue';
 import bodymovin from 'bodymovin';
+import ws from '../utils/ws';
 
 export default {
   components: {
@@ -67,15 +68,17 @@ export default {
   },
   data() {
     return {
-      powerData: [{ value: 0 }],
       animation: null,
       position: 0,
       resistance: 10,
       finished: false,
-      current_power: 0,
-      total_power: 0,
       target_power: 5000,
     };
+  },
+  computed: {
+    power() {
+      return this.$store.getters.power(this.id);
+    },
   },
   methods: {
     start() {
@@ -96,28 +99,45 @@ export default {
       this.current_power = power;
       if (this.record && !this.finished) {
         this.animation.setSpeed(power / 100);
-        this.total_power += power;
-        this.powerData.push({ value: power });
+        const wsData = {
+          data: {
+            id: this.id,
+            power,
+          },
+          method: 'addPower',
+        };
+        console.log('sending message to ws with data of', wsData);
+        ws.send(JSON.stringify(wsData));
+        // this.total_power += power;
+        // this.powerData.push({ value: power });
       }
     },
     test() {
       const power = 1000;
-      this.current_power = power;
+      const wsData = {
+        data: {
+          id: this.id,
+          power,
+        },
+        method: 'addPower',
+      };
+      console.log('sending message to ws with data of', wsData);
+      ws.send(JSON.stringify(wsData));
       if (this.record && !this.finished) {
         this.animation.setSpeed(power / 100);
-        this.total_power += power;
-        this.powerData.push({ value: power });
+        // this.total_power += power;
+        // this.powerData.push({ value: power });
       }
     },
   },
   watch: {
-    total_power(totalPower) {
-      if (totalPower !== 0) {
-        const percent = (totalPower / this.target_power) * 100;
+    power(power) {
+      if (power.total_power !== 0) {
+        const percent = (power.total_power / this.target_power) * 100;
         this.position = (percent > 92.7) ? 92.7 : percent;
       }
 
-      if (totalPower >= this.target_power) {
+      if (power.total_power >= this.target_power) {
         this.animation.setSpeed(0);
         this.$store.dispatch('finished', this.name);
       }

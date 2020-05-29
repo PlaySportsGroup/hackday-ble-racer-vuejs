@@ -21,6 +21,7 @@
 <script>
 import Cyclist from '@/components/Cyclist.vue';
 import moment from 'moment';
+import ws from '../utils/ws';
 
 export default {
   components: {
@@ -28,7 +29,6 @@ export default {
   },
   data() {
     return {
-      count: 0,
       record: false,
       startTime: null,
     };
@@ -52,10 +52,12 @@ export default {
   methods: {
     addCyclist() {
       const name = window.prompt('Please enter your name', '');
-      this.$socket.emit('add_cyclist', name);
-      // this.$store.dispatch('addCyclist', name);
-      // this.count += 1;
-      // this.cyclist.push({ id: this.count });
+      const wsData = {
+        data: name,
+        method: 'addCyclist',
+      };
+      console.log('sending message to ws with data of', wsData);
+      ws.send(JSON.stringify(wsData));
     },
     start() {
       this.record = true;
