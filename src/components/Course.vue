@@ -56,13 +56,11 @@ export default {
         data: name,
         method: 'addCyclist',
       };
-      console.log('sending message to ws with data of', wsData);
       ws.send(JSON.stringify(wsData));
     },
     start() {
       this.record = true;
       this.startTime = moment();
-      console.log(this.startTime);
     },
   },
 };

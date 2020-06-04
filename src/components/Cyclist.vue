@@ -106,14 +106,11 @@ export default {
           },
           method: 'addPower',
         };
-        console.log('sending message to ws with data of', wsData);
         ws.send(JSON.stringify(wsData));
-        // this.total_power += power;
-        // this.powerData.push({ value: power });
       }
     },
     test() {
-      const power = 1000;
+      const power = 40;
       const wsData = {
         data: {
           id: this.id,
@@ -121,12 +118,9 @@ export default {
         },
         method: 'addPower',
       };
-      console.log('sending message to ws with data of', wsData);
       ws.send(JSON.stringify(wsData));
       if (this.record && !this.finished) {
         this.animation.setSpeed(power / 100);
-        // this.total_power += power;
-        // this.powerData.push({ value: power });
       }
     },
   },

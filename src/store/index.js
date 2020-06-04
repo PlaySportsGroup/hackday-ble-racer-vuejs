@@ -14,9 +14,6 @@ export default new Vuex.Store({
     cyclist: (state) => state.riders,
     winner: (state) => state.winner,
     power: (state) => (id) => {
-      console.log(id);
-      const riderForPower = state.riders.find((rider) => rider.id === id);
-      console.log(riderForPower);
       return state.riders.find((rider) => rider.id === id).power;
     },
   },
@@ -29,26 +26,20 @@ export default new Vuex.Store({
         powerData: [],
       };
       const rider = { id, name, power };
-      console.log(id);
       state.riders.push(rider);
-      // state.riders = { ...state.riders, rider };
       state.riderCount = id;
     },
     winner(state, name) {
       state.winner = name;
     },
     addPower(state, payload) {
-      console.log('called add power');
-      console.log(state.riders);
       const selectedRider = state.riders.find((rider) => rider.id === payload.id);
-      console.log(selectedRider);
       selectedRider.power.current_power = payload.power;
       selectedRider.power.total_power = selectedRider.power.total_power
         ? selectedRider.power.total_power
         : 0;
       selectedRider.power.total_power += payload.power;
       selectedRider.power.powerData.push({ value: payload.power });
-      console.log(selectedRider);
       const filteredRiders = state.riders.filter((rider) => rider.id !== payload.id);
       state.riders = [...filteredRiders, selectedRider];
     },
