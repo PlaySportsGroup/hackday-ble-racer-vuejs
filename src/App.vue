@@ -20,8 +20,11 @@ export default {
       };
 
       ws.addEventListener('message', (messageEvent) => {
+        console.log(messageEvent);
         const paramaters = JSON.parse(messageEvent.data);
-        this.$store.dispatch(paramaters.method, paramaters.data);
+        if (paramaters.method) {
+          this.$store.dispatch(paramaters.method, paramaters.data);
+        }
       });
 
       ws.addEventListener('error', (error) => {

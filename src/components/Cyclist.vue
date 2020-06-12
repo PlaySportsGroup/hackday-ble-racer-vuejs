@@ -47,7 +47,7 @@ export default {
   },
   props: {
     count: Number,
-    id: Number,
+    id: String,
     record: Boolean,
     name: String,
     startTime: Object,
